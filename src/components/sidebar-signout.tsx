@@ -2,8 +2,9 @@
 
 import { authClient } from "@/libs/auth-client"
 import { useRouter } from "next/navigation"
+import { DropdownMenuItem } from "./ui/dropdown-menu"
 
-export function SignOutSidebar({ children }: { children?: React.ReactNode }) {
+export function SidebarDropdownMenuItemSignOut({ children }: { children?: React.ReactNode }) {
 
     const router = useRouter()
 
@@ -16,8 +17,8 @@ export function SignOutSidebar({ children }: { children?: React.ReactNode }) {
     }
 
     return (
-        <span onClick={signOut}>
+        <DropdownMenuItem onClick={signOut} className="cursor-pointer">
             {children}
-        </span>
+        </DropdownMenuItem>
     )
 }

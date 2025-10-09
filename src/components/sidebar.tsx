@@ -20,7 +20,7 @@ import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon, CommandIcon, HomeIcon
 import Link from "next/link"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
-import { SignOutSidebar } from "./sidebar-signout"
+import { SidebarDropdownMenuItemSignOut } from "./sidebar-signout"
 import { auth } from "@/libs/auth"
 import { headers } from "next/headers"
 
@@ -266,15 +266,15 @@ export async function AppSidebar() {
                                     <span>Billing</span>
                                 </DropdownMenuItem>
 
-                                <DropdownMenuItem>
+                                <SidebarDropdownMenuItemSignOut>
                                     <div className="flex size-6 items-center justify-center rounded-md border">
                                         <SettingsIcon className="size-3.5 shrink-0" />
                                     </div>
 
-                                    <SignOutSidebar>
+                                    <span>
                                         Sign out
-                                    </SignOutSidebar>
-                                </DropdownMenuItem>
+                                    </span>
+                                </SidebarDropdownMenuItemSignOut>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>

@@ -1,7 +1,6 @@
 "use client"
 
 import { cn } from "@/libs/components-utils"
-import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
@@ -23,6 +22,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { authClient } from "@/libs/auth-client"
 import { toast } from "sonner"
+import { ButtonGo } from "@/components/app-buttons"
+import { useState } from "react"
 
 const SigninSchema = z.object({
     email: z.email(),
@@ -33,11 +34,15 @@ type SigninType = z.infer<typeof SigninSchema>
 
 export default function SignInPage() {
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const form = useForm<SigninType>({
         resolver: zodResolver(SigninSchema),
     })
 
-    const handleSubmit = form.handleSubmit(async ({ email, password }) => {
+    const handleSubmit = async ({ email, password }: SigninType) => {
+        setIsLoading(true)
+
         const { data: result, error } = await authClient.signIn.email({
             email,
             password,
@@ -48,9 +53,10 @@ export default function SignInPage() {
         if (result) {
             toast.success(`Redirecting...`)
         } else if (error) {
+            setIsLoading(false)
             toast.warning(error.message)
         }
-    })
+    }
 
     return (
         <div className="min-h-svh w-full p-6 md:p-10 flex items-center justify-center">
@@ -66,12 +72,12 @@ export default function SignInPage() {
                         </CardHeader>
 
                         <CardContent>
-                            <form onSubmit={handleSubmit} className="space-y-4">
+                            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                                 <FieldGroup>
                                     <Field>
                                         <FieldLabel htmlFor="email">Email</FieldLabel>
 
-                                        <Input type="email" placeholder="m@example.com" {...form.register("email")} />
+                                        <Input type="email" placeholder="Your email" {...form.register("email")} />
 
                                         <FieldError errors={[form.formState.errors.email]} />
                                     </Field>
@@ -85,13 +91,13 @@ export default function SignInPage() {
                                             </Link>
                                         </div>
 
-                                        <Input type="password" {...form.register("password")} />
+                                        <Input type="password" placeholder="Your password" {...form.register("password")} />
 
                                         <FieldError errors={[form.formState.errors.password]} />
                                     </Field>
 
                                     <Field>
-                                        <Button type="submit">Login</Button>
+                                        <ButtonGo isLoading={isLoading} type="submit">Login</ButtonGo>
 
                                         <FieldDescription className="text-center">
                                             Don&apos;t have an account? <Link href="/signup">Sign up</Link>
