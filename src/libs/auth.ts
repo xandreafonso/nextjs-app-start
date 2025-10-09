@@ -1,5 +1,6 @@
 import { cryptpass } from "@/backend/libs/crypt-pass";
 import { prisma } from "@/backend/libs/prisma";
+import { sendMailService } from "@/backend/services/send-mail";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 
@@ -7,6 +8,22 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
+
+    emailVerification: {
+        sendOnSignUp: true,
+
+        autoSignInAfterVerification: true,
+
+        sendVerificationEmail: async ({ user, url, token }) => {
+            console.log(`Send verification email to ${user.email}.`)
+
+            return await sendMailService.verificationEmail({ user, url, token })
+        },
+
+        afterEmailVerification: async (user, request) => {
+            console.log(`${user.email} has been successfully verified!`);
+        },
+    },
 
     emailAndPassword: {
         enabled: true,
@@ -21,6 +38,16 @@ export const auth = betterAuth({
             async verify({ password, hash }: { password: string; hash: string }) {
                 return await cryptpass.verify(password, hash)
             }
-        }
+        },
+
+        sendResetPassword: async ({ user, url, token }) => {
+            console.log(`Send reset password email to ${user.email}.`)
+            
+            return await sendMailService.resetPassword({ user, url, token })
+        },
+
+        onPasswordReset: async ({ user }, request) => {
+            console.log(`Password for user ${user.email} has been reset.`);
+        },
     },
 });

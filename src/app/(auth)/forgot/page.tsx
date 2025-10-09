@@ -25,32 +25,30 @@ import { toast } from "sonner"
 import { ButtonGo } from "@/components/app-buttons"
 import { useState } from "react"
 
-const SigninSchema = z.object({
+const ForgotSchema = z.object({
     email: z.email(),
-    password: z.string().min(4, "Password must be at least 4 characters long"),
 })
 
-type SigninType = z.infer<typeof SigninSchema>
+type ForgotType = z.infer<typeof ForgotSchema>
 
-export default function SignInPage() {
+export default function ForgotPage() {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const form = useForm<SigninType>({
-        resolver: zodResolver(SigninSchema),
+    const form = useForm<ForgotType>({
+        resolver: zodResolver(ForgotSchema),
     })
 
-    const handleSubmit = async ({ email, password }: SigninType) => {
+    const handleSubmit = async ({ email }: ForgotType) => {
         setIsLoading(true)
 
-        await authClient.signIn.email({
+        await authClient.requestPasswordReset({
             email,
-            password,
-            rememberMe: true,
-            callbackURL: "/adm",
+            redirectTo: `${window.location.origin}/password`
         }, {
             onSuccess: () => {
-                toast.success(`Redirecting...`)
+                setIsLoading(false)
+                toast.success(`Verify your email to reset your password`)
             },
 
             onError: (context) => {
@@ -66,10 +64,10 @@ export default function SignInPage() {
                 <div className={cn("flex flex-col gap-6")}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Login to your account</CardTitle>
+                            <CardTitle>Reset your password</CardTitle>
 
                             <CardDescription>
-                                Enter your email below to login to your account
+                                Enter your email below to reset your password
                             </CardDescription>
                         </CardHeader>
 
@@ -85,24 +83,10 @@ export default function SignInPage() {
                                     </Field>
 
                                     <Field>
-                                        <div className="flex items-center">
-                                            <FieldLabel htmlFor="password">Password</FieldLabel>
-
-                                            <Link href="/forgot" className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                                                Forgot your password?
-                                            </Link>
-                                        </div>
-
-                                        <Input type="password" placeholder="Your password" {...form.register("password")} />
-
-                                        <FieldError errors={[form.formState.errors.password]} />
-                                    </Field>
-
-                                    <Field>
-                                        <ButtonGo isLoading={isLoading} type="submit">Login</ButtonGo>
+                                        <ButtonGo isLoading={isLoading} type="submit">Reset Password</ButtonGo>
 
                                         <FieldDescription className="text-center">
-                                            Don&apos;t have an account? <Link href="/signup">Sign up</Link>
+                                            Do you have an account? <Link href="/signin">Sign in</Link>
                                         </FieldDescription>
                                     </Field>
                                 </FieldGroup>

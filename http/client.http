@@ -1,0 +1,8 @@
+###
+POST http://localhost:3001/websocket/api/notify
+Content-Type: application/json
+
+{
+    "user": { "id": "123" }, 
+    "event": { "name": "test", "data": "Mensagem enviada do client.http." }
+}

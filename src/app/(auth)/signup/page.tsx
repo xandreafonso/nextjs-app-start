@@ -24,32 +24,37 @@ import { authClient } from "@/libs/auth-client"
 import { toast } from "sonner"
 import { ButtonGo } from "@/components/app-buttons"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
-const SigninSchema = z.object({
+const SignupSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters long"),
     email: z.email(),
     password: z.string().min(4, "Password must be at least 4 characters long"),
 })
 
-type SigninType = z.infer<typeof SigninSchema>
+type SignupType = z.infer<typeof SignupSchema>
 
-export default function SignInPage() {
+export default function SignUpPage() {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
-    const form = useForm<SigninType>({
-        resolver: zodResolver(SigninSchema),
+    const router = useRouter()
+
+    const form = useForm<SignupType>({
+        resolver: zodResolver(SignupSchema),
     })
 
-    const handleSubmit = async ({ email, password }: SigninType) => {
+    const handleSubmit = async ({ name, email, password }: SignupType) => {
         setIsLoading(true)
 
-        await authClient.signIn.email({
+        await authClient.signUp.email({
+            name,
             email,
             password,
-            rememberMe: true,
-            callbackURL: "/adm",
+            callbackURL: "/adm/verified-email",
         }, {
             onSuccess: () => {
+                router.push("/adm")
                 toast.success(`Redirecting...`)
             },
 
@@ -66,16 +71,24 @@ export default function SignInPage() {
                 <div className={cn("flex flex-col gap-6")}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Login to your account</CardTitle>
+                            <CardTitle>Register</CardTitle>
 
                             <CardDescription>
-                                Enter your email below to login to your account
+                                Enter your name and email below to register for an account
                             </CardDescription>
                         </CardHeader>
 
                         <CardContent>
                             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                                 <FieldGroup>
+                                    <Field>
+                                        <FieldLabel htmlFor="name">Name</FieldLabel>
+
+                                        <Input type="text" placeholder="Your name" {...form.register("name")} />
+
+                                        <FieldError errors={[form.formState.errors.name]} />
+                                    </Field>
+
                                     <Field>
                                         <FieldLabel htmlFor="email">Email</FieldLabel>
 
@@ -85,24 +98,18 @@ export default function SignInPage() {
                                     </Field>
 
                                     <Field>
-                                        <div className="flex items-center">
-                                            <FieldLabel htmlFor="password">Password</FieldLabel>
-
-                                            <Link href="/forgot" className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                                                Forgot your password?
-                                            </Link>
-                                        </div>
-
+                                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                                        
                                         <Input type="password" placeholder="Your password" {...form.register("password")} />
 
                                         <FieldError errors={[form.formState.errors.password]} />
                                     </Field>
 
                                     <Field>
-                                        <ButtonGo isLoading={isLoading} type="submit">Login</ButtonGo>
+                                        <ButtonGo isLoading={isLoading} type="submit">Register</ButtonGo>
 
                                         <FieldDescription className="text-center">
-                                            Don&apos;t have an account? <Link href="/signup">Sign up</Link>
+                                            Do you have an account? <Link href="/signin">Sign in</Link>
                                         </FieldDescription>
                                     </Field>
                                 </FieldGroup>
