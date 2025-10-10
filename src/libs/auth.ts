@@ -1,29 +1,49 @@
-import { cryptpass } from "@/backend/libs/crypt-pass";
-import { prisma } from "@/backend/libs/prisma";
-import { sendMailService } from "@/backend/services/send-mail";
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
+import { cryptpass } from "@/backend/libs/crypt-pass"
+import { prisma } from "@/backend/libs/prisma"
+import { sendMailService } from "@/backend/services/send-mail"
+import { prismaAdapter } from "better-auth/adapters/prisma"
+import { betterAuth } from "better-auth"
+import { admin as adminPlugin } from "better-auth/plugins"
+import { ac, user, admin } from "./permissions"
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
 
-    emailVerification: {
-        sendOnSignUp: true,
+    // user: {
+    //     additionalFields: {
+    //         organizationId: {
+    //             type: "string",
+    //             required: true,
+    //             input: false,
+    //         }
+    //     },
+    // },
 
-        autoSignInAfterVerification: true,
+    // databaseHooks: {
+    //     user: {
+    //         create: {
+    //             before: async (user, ctx) => { }
+    //         }
+    //     }
+    // },
 
-        sendVerificationEmail: async ({ user, url, token }) => {
-            console.log(`Send verification email to ${user.email}.`)
+    // emailVerification: {
+    //     sendOnSignUp: true,
 
-            return await sendMailService.verificationEmail({ user, url, token })
-        },
+    //     autoSignInAfterVerification: true,
 
-        afterEmailVerification: async (user, request) => {
-            console.log(`${user.email} has been successfully verified!`);
-        },
-    },
+    //     sendVerificationEmail: async ({ user, url, token }) => {
+    //         console.log(`Send verification email to ${user.email}.`)
+
+    //         return await sendMailService.verificationEmail({ user, url, token })
+    //     },
+
+    //     afterEmailVerification: async (user, request) => {
+    //         console.log(`${user.email} has been successfully verified!`);
+    //     },
+    // },
 
     emailAndPassword: {
         enabled: true,
@@ -50,4 +70,8 @@ export const auth = betterAuth({
             console.log(`Password for user ${user.email} has been reset.`);
         },
     },
+
+    // https://www.better-auth.com/docs/plugins/admin
+
+    plugins: [adminPlugin({ defaultRole: "user", ac, roles: { user, admin } })],
 });

@@ -1,6 +1,6 @@
 import { Header } from "@/components/header";
 import { Main } from "@/components/main";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { SidebarInset } from "@/components/ui/sidebar";
 
 export default function VerifiedEmailPage() {
