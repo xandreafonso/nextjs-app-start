@@ -19,7 +19,7 @@ export default async function CredentialsPage() {
         redirect("/signin")
     }
 
-    const list = await prisma.credential.findMany({
+    const data = await prisma.credential.findMany({
         include: {
             provider: true,
         }
@@ -38,7 +38,7 @@ export default async function CredentialsPage() {
             </Header>
 
             <Main>
-                <DataTable columns={credentialColumns} data={list} />
+                <DataTable columns={credentialColumns} data={data} />
             </Main>
         </SidebarInset>
     )
