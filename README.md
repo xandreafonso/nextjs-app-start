@@ -22,5 +22,8 @@ pnpx @better-auth/cli generate --config src/libs/auth.ts
 
 pnpm add react-markdown react-syntax-highlighter rehype-format rehype-parse rehype-remark rehype-stringify remark-frontmatter remark-gfm remark-parse remark-rehype remark-stringify unified
 
+pnpm dlx shadcn@latest add table
+pnpm add @tanstack/react-table
+
 pnpm add fastify fastify-socket.io @fastify/cors socket.io
 ```

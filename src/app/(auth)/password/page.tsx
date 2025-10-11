@@ -56,7 +56,7 @@ export default function ResetPasswordPage() {
         const token = new URLSearchParams(window.location.search).get("token")
 
         if (!token) {
-            return toast.error("Invalid or missing token")
+            return toast.warning("Invalid or missing token")
         }
 
         setIsLoading(true)

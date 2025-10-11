@@ -113,9 +113,9 @@ export async function AppSidebar() {
 
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <Link href="/adm">
-                                        <InboxIcon />
-                                        <span>Other</span>
+                                    <Link href="/adm/credentials">
+                                        <SettingsIcon />
+                                        <span>Credentials</span>
                                     </Link>
                                 </SidebarMenuButton>
 

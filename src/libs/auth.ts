@@ -4,6 +4,7 @@ import { sendMailService } from "@/backend/services/send-mail"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { betterAuth } from "better-auth"
 import { admin as adminPlugin } from "better-auth/plugins"
+import { nextCookies } from "better-auth/next-js"
 import { ac, user, admin } from "./permissions"
 
 export const auth = betterAuth({
@@ -73,5 +74,5 @@ export const auth = betterAuth({
 
     // https://www.better-auth.com/docs/plugins/admin
 
-    plugins: [adminPlugin({ defaultRole: "user", ac, roles: { user, admin } })],
+    plugins: [nextCookies(), adminPlugin({ defaultRole: "user", ac, roles: { user, admin } })],
 });

@@ -10,13 +10,13 @@ export default function AdmPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/">Test</BreadcrumbLink>
+                            <BreadcrumbLink href="/adm">Path</BreadcrumbLink>
                         </BreadcrumbItem>
 
                         <BreadcrumbSeparator />
 
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/adm">Path</BreadcrumbLink>
+                            <BreadcrumbLink href="/adm">Test</BreadcrumbLink>
                         </BreadcrumbItem>
 
                         <BreadcrumbSeparator />

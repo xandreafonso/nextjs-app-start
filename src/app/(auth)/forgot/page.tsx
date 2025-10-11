@@ -86,7 +86,7 @@ export default function ForgotPage() {
                                         <ButtonGo isLoading={isLoading} type="submit">Reset Password</ButtonGo>
 
                                         <FieldDescription className="text-center">
-                                            Do you have an account? <Link href="/signin">Sign in</Link>
+                                            Do you remember your password? <Link href="/signin">Sign in</Link>
                                         </FieldDescription>
                                     </Field>
                                 </FieldGroup>

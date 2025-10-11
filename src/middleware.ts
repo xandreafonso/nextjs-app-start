@@ -4,13 +4,13 @@ import { resp } from "./libs/resp";
 import { redirectUtils } from "./libs/redirect-utils";
 
 export async function middleware(request: NextRequest) {
-	const sessionCookie = getSessionCookie(request);
+	const sessionCookie = getSessionCookie(request)
 
 	if (!sessionCookie) {
-		return resp.redirect(redirectUtils.url('/signin'));
+		return resp.redirect(redirectUtils.url('/signin'))
 	}
 
-	return NextResponse.next();
+	return NextResponse.next()
 }
 
 export const config = {
