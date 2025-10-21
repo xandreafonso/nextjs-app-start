@@ -27,7 +27,7 @@ class GetUserUseCase {
 
         const { id } = parsed.data
 
-        const user = await prisma.user.findUnique({ where: { id }, omit: { password: true } })
+        const user = await prisma.user.findUnique({ where: { id } })
 
         if (!user) {
             return usecaseUtils.notFoundOutput("User not found", "id", { id })

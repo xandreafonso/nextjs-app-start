@@ -25,7 +25,7 @@ class ListUsersUseCase {
             return usecaseUtils.clientErrorOutput(zodUtils.issuesToMessages(parsed.error.issues))
         }
 
-        const users = await prisma.user.findMany({ omit: { password: true } })
+        const users = await prisma.user.findMany()
 
         return usecaseUtils.okOutput(users)
     }

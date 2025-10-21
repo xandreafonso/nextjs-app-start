@@ -15,9 +15,7 @@ export default async function CredentialsPage() {
         headers: await headers()
     })
 
-    if(!session) {
-        redirect("/signin")
-    }
+    if(!session) redirect("/signin")
 
     const data = await prisma.credential.findMany({
         include: {
