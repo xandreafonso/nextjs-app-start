@@ -21,7 +21,7 @@ import Link from "next/link"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
 import { SidebarDropdownMenuItemSignOut } from "./sidebar-signout"
-import { auth } from "@/libs/auth"
+import { auth } from "@/backend/libs/auth"
 import { headers } from "next/headers"
 
 

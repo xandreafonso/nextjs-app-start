@@ -1,11 +1,11 @@
 import { prisma } from "@/backend/libs/prisma"
-import { auth } from "@/libs/auth";
+import { auth } from "@/backend/libs/auth";
 
 async function signUps() {
     const { user } = await auth.api.signUpEmail({
         body: {
-            email: "alexandreferreira@decola.company",
-            name: "Alexandre Dev Decola",
+            email: "afonsoaaf@gmail.com",
+            name: "Alexandre Afonso",
             password: "1234",
         },
     })

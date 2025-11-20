@@ -27,3 +27,22 @@ pnpm add @tanstack/react-table
 
 pnpm add fastify fastify-socket.io @fastify/cors socket.io
 ```
+
+# NOTAS
+
+## components.json
+
+Eu vi como alterar alguns caminhos padrão.
+
+```json
+{
+    "aliases": {
+        "utils": "@/libs/components-utils",
+        "lib": "@/libs",
+    }
+}
+```
+
+O caminho para a pasta lib foi alterado para libs.
+
+O arquivo lib/utils.ts foi configurado para ser reconhecido em libs/components-utils.ts.

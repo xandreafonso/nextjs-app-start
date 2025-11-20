@@ -5,7 +5,7 @@ import { Header } from "@/components/header";
 import { Main } from "@/components/main";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { SidebarInset } from "@/components/ui/sidebar";
-import { auth } from "@/libs/auth";
+import { auth } from "@/backend/libs/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
